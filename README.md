@@ -1,6 +1,6 @@
 # ny_news_flutter
 
-A new Flutter project.
+Flutter project as a challenge.
 
 ## Getting Started
 
