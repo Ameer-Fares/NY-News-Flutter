@@ -20,16 +20,15 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text('Search'),
-        ),
+        centerTitle: true,
+        title: Text('Search'),
       ),
       body: Column(
         children: [
           TextField(
             autofocus: true,
             onChanged: (value) => changeText(value),
-            decoration: InputDecoration(hintText: 'Search'),
+            decoration: InputDecoration(hintText: 'Search articles here...'),
           ),
           ElevatedButton(
             child: Text('Submit'),

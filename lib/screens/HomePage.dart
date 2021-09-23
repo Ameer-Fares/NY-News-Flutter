@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:ny_news_flutter/screens/SearchPage.dart';
 import 'package:ny_news_flutter/src/blocs/articles_bloc.dart';
 import 'package:ny_news_flutter/src/blocs/articles_provider.dart';
+import 'package:ny_news_flutter/widgets/home_list_title.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key, required this.title}) : super(key: key);
   final String title;
   final menuItems = ['Most Viewed', 'Most Shared', 'Most Emailed'];
   late ArticlesBloc bloc;
+
   @override
   Widget build(BuildContext context) {
     bloc = ArticlesProvider.of(context);
@@ -20,38 +22,30 @@ class HomePage extends StatelessWidget {
         body: ListView(
           children: [
             Container(height: 70),
-            Text(
-              'Search',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Search',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
             ),
-            ListTile(
-                title: Text('Search Articles'),
-                trailing: Icon(Icons.navigate_next),
-                onTap: () => Navigator.pushNamed(context, '/search')),
+            HomeListTitle(title: 'Search Articles', path: '/search'),
             Container(
               height: 40,
             ),
-            Text(
-              'Popular',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Popular',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
             ),
-            ListView.separated(
-              separatorBuilder: (context, index) {
-                return Divider(
-                  color: Colors.black,
-                );
-              },
+            ListView.builder(
               shrinkWrap: true,
               itemCount: menuItems.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(menuItems[index]),
-                  trailing: Icon(Icons.navigate_next),
-                  onTap: () {
-                    bloc.fetchPopular(menuItems[index],'1');
-                    Navigator.pushNamed(context, '/articleslist');
-                  },
-                );
+                return HomeListTitle(
+                    title: menuItems[index], path: '/articleslist');
               },
             )
           ],

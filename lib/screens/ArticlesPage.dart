@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ny_news_flutter/src/blocs/articles_bloc.dart';
 import 'package:ny_news_flutter/src/blocs/articles_provider.dart';
 import 'package:ny_news_flutter/src/models/article.dart';
+import 'package:ny_news_flutter/widgets/article_list_title.dart';
 import 'package:ny_news_flutter/widgets/loading_container.dart';
 
 class ArticlesPage extends StatelessWidget {
@@ -13,7 +14,8 @@ class ArticlesPage extends StatelessWidget {
     bloc = ArticlesProvider.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text('Articles')),
+        centerTitle: true,
+        title: Text('Articles'),
       ),
       body: StreamBuilder(
           stream: bloc.articlesList,
@@ -21,13 +23,12 @@ class ArticlesPage extends StatelessWidget {
             if (!snapshot.hasData) return LoadingContainer();
             return ListView.separated(
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(snapshot.data![index].title),
-                    subtitle: Text(snapshot.data![index].pub_date),
-                  );
+                  return ArticleListTitle(article: snapshot.data![index]);
                 },
                 separatorBuilder: (context, index) {
-                  return Divider();
+                  return Divider(
+                    thickness: 2,
+                  );
                 },
                 itemCount: snapshot.data!.length);
           }),

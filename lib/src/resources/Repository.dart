@@ -14,9 +14,11 @@ class Repository {
       articlesList = await source.searchArticles(searchQuery);
       if (articlesList.isNotEmpty) break;
     }
-    // for (var cache in caches) {
-    //   cache.addItem(item);
-    // }
+    for (var cache in caches) {
+      articlesList.forEach((element) {
+        cache.addArticle(element);
+      });
+    }
 
     return articlesList;
   }
@@ -27,11 +29,13 @@ class Repository {
     for (source in sources) {
       articlesList = await source.fetchPopular(articalType, period);
 
-        if (articlesList.isNotEmpty) break;
+      if (articlesList.isNotEmpty) break;
     }
-    // for (var cache in caches) {
-    //   cache.addItem(item);
-    // }
+    for (var cache in caches) {
+      articlesList.forEach((element) {
+        cache.addArticle(element);
+      });
+    }
 
     return articlesList;
   }
@@ -40,13 +44,11 @@ class Repository {
 abstract class Source {
   Future<List<Article>> searchArticles(String searchQuery);
 
-  Future<List<Article>> fetchPopular(String articalType, String period);
-
-// Future<ItemModel> fetchItem(int id);
+  Future<List<Article>> fetchPopular(String articleType, String period);
 }
 
 abstract class Cache {
-  // Future<int> addItem(ItemModel item);
+  Future<int> addArticle(Article article);
 
-  // Future<int> clear();
+  Future<int> clear();
 }

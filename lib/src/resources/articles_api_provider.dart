@@ -36,8 +36,8 @@ class ArticlesApiProvider implements Source {
   Future<List<Article>> fetchPopular(String articlesType, String period) async {
     List<Article> articles = new List.empty(growable: true);
     Map<String, String> parameters = {'api-key': API_KEY};
-    Uri uri =
-        Uri.https(_baseurl, '/svc/mostpopular/v2/$articlesType/$period.json', parameters);
+    Uri uri = Uri.https(
+        _baseurl, '/svc/mostpopular/v2/$articlesType/$period.json', parameters);
 
     try {
       var response = await http.get(uri);
@@ -47,10 +47,10 @@ class ArticlesApiProvider implements Source {
       List<dynamic> dataList = data['results'];
 
       dataList.forEach((element) {
-        articles.add(Article.fromJson(element));
+        articles.add(Article.fromJson(element, articlesType));
       });
     } catch (err) {
-      throw err.toString();
+      print(err.toString());
     }
 
     return articles;
